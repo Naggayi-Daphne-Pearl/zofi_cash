@@ -1,13 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "./Button";
 import validationSchema from "./Schema";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import OtpVerfication from "./OtpVerficiationForm";
 
 const SignupForm = () => {
   const initialValues = { phoneNumber: "" };
+  const [otpSent, setOtpSent] = useState(false);
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values, e) => {
     // handle form submission
+    e.preventDefault();
+    // Call an API to send an OTP message to the user's phone number
+    const response = await fetch("/api/send-otp", {
+      method: "POST",
+      body: JSON.stringify({ phoneNumber }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      setOtpSent(true);
+    } else {
+      // Handle error
+    }
   };
   return (
     <div>
@@ -52,18 +68,22 @@ const SignupForm = () => {
                   component="div"
                   className="text-red-500 text-xs italic"
                 />
+                <div>
+                  <a
+                    href="/login"
+                    className="flex justify-start text-primary underline pt-2"
+                  >
+                    Have An account
+                  </a>
+                </div>
               </div>
-              <div>
-                <a
-                  href="/login"
-                  className="flex justify-start text-primary underline"
-                >
-                  Have An account
-                </a>
-              </div>
-              <div className="flex items-center justify-between">
-                <Button type="submit">Verify Number</Button>
-              </div>
+              {!otpSent ? (
+                <div className="flex items-center justify-between">
+                  <Button type="submit">Verify Number</Button>
+                </div>
+              ) : (
+                <OtpVerificationForm phoneNumber={phoneNumber} />
+              )}
             </Form>
           )}
         </Formik>
