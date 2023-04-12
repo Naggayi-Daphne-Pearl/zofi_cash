@@ -1,14 +1,15 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext} from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import validationSchema from "./Schema";
 import Button from "./Button";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useUserContext } from "../context/AuthContext";
 
 // if  user logs in 5 times
 const MAX_LOGIN_ATTEMPTS = 5;
-function LoginPage() {
+function LoginPage({}) {
   const initialValues = { email: "", password: "" };
 
   const [loginAttempts, setLoginAttempts] = useState(0);
@@ -26,8 +27,7 @@ function LoginPage() {
     }
   }, [loginAttempts]);
 
-  const handleSubmit = async (e, value) => {
-    e.preventDefault();
+  const handleSubmit = async (values, { setSubmitting }) => {
     // handle locked account
     if (loginLocked) {
       // Handle locked account error
@@ -35,17 +35,23 @@ function LoginPage() {
       return;
     }
     // Call an API to authenticate the user's credentials
-    const response = await fetch("/api/login", {
-      method: "POST",
-      body: JSON.stringify({
-        email: value.email,
-        password: value.password,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const response = await fetch(
+      "https://staging-auth-api.zoficash.com/api/v1/account-login",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          email: values.email,
+          password: values.password,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     if (response.ok) {
+      const data = await response.json();
+      setUser(data.user);
+      setIsAuthenticated(true);
       router.push("/dashboard");
       toast.success("LogIn Successfully");
     } else {
@@ -54,6 +60,7 @@ function LoginPage() {
       console.log(response);
       toast.error("Failed to login.");
     }
+    setSubmitting(false);
   };
   return (
     <div className="flex justify-center items-center h-screen">
@@ -122,7 +129,7 @@ function LoginPage() {
               </a>
             </div>
             <div className="flex items-center justify-center ">
-              <Button type="submit">LOG IN </Button>
+              <Button type="submit" onSubmit={handleSubmit}>LOG IN </Button>
             </div>
           </Form>
         )}
