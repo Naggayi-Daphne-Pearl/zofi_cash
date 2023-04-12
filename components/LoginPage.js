@@ -1,49 +1,88 @@
-import React from "react";
-import Button from "./Button";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import validationSchema from "./Schema";
-const LoginPage = () => {
+import Button from "./Button";
+
+function LoginPage() {
+  const initialValues = { email: "", password: "" };
+
+  const handleSubmit = (values) => {
+    // handle form submission
+  };
+
   return (
-    <div>
-      <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
-        <div>
-          <h3 className="text-4xl font-bold text-#335EEA font-header text-primary ">
-            Log In Form
-          </h3>
-        </div>
-        <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-lg sm:rounded-lg">
-          <form>
-            <div className="mt-4">
-              <label className="block text-md font-medium text-gray-700 font-body flex justify-center text-xl p-2 ">
-                Phone Number
+    <div className="flex justify-center items-center h-screen">
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+        {({ errors, touched }) => (
+          <Form className="bg-white shadow-md rounded px-20 pt-6 pb-8 mb-4">
+            <h1 className="flex justify-center text-3xl text-primary py-8">
+              Login Form
+            </h1>
+            <div className="mb-4">
+              <label
+                htmlFor="email"
+                className="block text-gray-700 font-bold mb-2 text-2xl justify-center flex pb-3"
+              >
+                Email
               </label>
-              <div className="flex flex-col items-start">
-                <input
-                  type="phone_number"
-                  name="phone_number"
-                  className="block border-primary w-full mt-1 border-gray-70 rounded-md shadow-md  focus:ring-primary focus:ring-opacity-50 p-2"
-                />
-              </div>
+              <Field
+                type="email"
+                id="email"
+                name="email"
+                className={
+                  errors.email && touched.email
+                    ? "border-red-500 appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    : "appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                }
+              />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="text-red-500 text-xs italic"
+              />
             </div>
-            <div className="mt-4">
-              <label className="block text-md font-medium text-gray-700 font-body flex justify-center text-xl p-2 ">
+            <div className="mb-6">
+              <label
+                htmlFor="password"
+                className="block text-gray-700 font-bold mb-2 text-2xl justify-center flex pb-3"
+              >
                 Password
               </label>
-              <div className="flex flex-col items-start">
-                <input
-                  type="password"
-                  name="password"
-                  className="block border-primary w-full mt-1 border-gray-70 rounded-md shadow-md  focus:ring-primary focus:ring-opacity-50 p-2"
-                />
-              </div>
+              <Field
+                type="password"
+                id="password"
+                name="password"
+                className={
+                  errors.password && touched.password
+                    ? "border-red-500 appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    : "appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                }
+              />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="text-red-500 text-xs italic"
+              />
             </div>
-            <div className=" pt-8 flex justify-center">
-              <Button>Verify Number</Button>
+            <div>
+              <a
+                href="/signup"
+                className="flex justify-start text-primary underline"
+              >
+                Don't have an account
+              </a>
             </div>
-          </form>
-        </div>
-      </div>
+            <div className="flex items-center justify-center ">
+              <Button type="submit">LOG IN </Button>
+            </div>
+          </Form>
+        )}
+      </Formik>
     </div>
   );
-};
+}
 
 export default LoginPage;

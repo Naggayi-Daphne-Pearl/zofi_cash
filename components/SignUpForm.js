@@ -1,36 +1,72 @@
 import React from "react";
 import Button from "./Button";
+import validationSchema from "./Schema";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 
 const SignupForm = () => {
+  const initialValues = { phoneNumber: "" };
+
+  const handleSubmit = (values) => {
+    // handle form submission
+  };
   return (
     <div>
-      <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 bg-gray-50">
+      <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 ">
         <div>
           <a href="https://www.zoficash.com/">
-            <h3 className="text-4xl font-bold text-#335EEA font-header text-primary">
+            <h3 className="text-5xl font-bold text-#335EEA font-header text-primary py-6">
               Zofi Cash
             </h3>
           </a>
         </div>
-        <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-lg sm:rounded-lg">
-          <form>
-            <div className="mt-4">
-              <label className="block text-md font-medium text-gray-700 font-body flex justify-center text-xl p-2 ">
-                Phone Number
-              </label>
-              <div className="flex flex-col items-start">
-                <input
-                  type="text"
-                  name="text"
-                  className="block border-primary w-full mt-1 border-gray-70 rounded-md shadow-md  focus:ring-primary focus:ring-opacity-50 p-2"
+
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+        >
+          {({ errors, touched }) => (
+            <Form className="bg-white shadow-md rounded px-20 pt-6 pb-10 mb-4">
+              <h1 className="flex justify-center text-3xl text-primary py-8">
+                Sign Up
+              </h1>
+              <div className="mb-6">
+                <label
+                  htmlFor="phoneNumber"
+                  className="block text-gray-700 font-bold mb-2 text-2xl justify-center flex pb-3"
+                >
+                  Phone Number
+                </label>
+                <Field
+                  type="tel"
+                  id="phoneNumber"
+                  name="phone"
+                  className={
+                    errors.phoneNumber && touched.phoneNumber
+                      ? "border-red-500 appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      : "appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline "
+                  }
+                />
+                <ErrorMessage
+                  name="phoneNumber"
+                  component="div"
+                  className="text-red-500 text-xs italic"
                 />
               </div>
-            </div>
-            <div className=" pt-8 flex justify-center">
-              <Button>Verify Number</Button>
-            </div>
-          </form>
-        </div>
+              <div>
+                <a
+                  href="/login"
+                  className="flex justify-start text-primary underline"
+                >
+                  Have An account
+                </a>
+              </div>
+              <div className="flex items-center justify-between">
+                <Button type="submit">Verify Number</Button>
+              </div>
+            </Form>
+          )}
+        </Formik>
       </div>
     </div>
   );
