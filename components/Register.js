@@ -4,6 +4,9 @@ import validationSchema from "./Schema";
 import Button from "./Button";
 import { countryCodes } from "./data";
 import { roles } from "./data";
+import { useRouter } from "next/router";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Register() {
   const initialValues = {
@@ -14,6 +17,8 @@ function Register() {
     countryCode: "",
     roles: "",
   };
+
+  const router = useRouter();
 
   const [selectRole, setSelectRole] = useState("");
 
@@ -27,8 +32,35 @@ function Register() {
     setSelectedCountryCode(event.target.value);
   }
 
-  const handleSubmit = (values) => {
-    // handle form submission
+  const handleSubmit = async (e) => {
+    // e.preventDefault();
+    // Call an API to submit the user's KYC details
+    const response = await fetch(
+      "https://staging-auth-api.zoficash.com/api/v1//account-registration",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          email: e.target.email.value,
+          password: e.target.password.value,
+          roles: selectRole,
+          repeat_password: e.target.confirmPassword.value,
+          phoneNumber: e.target.phoneNumber.value,
+          country_code: selectedCountryCode,
+          ip: "localhost:3000",
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    if (response.ok) {
+      router.push("/login");
+      toast.success("Form submitted successfully!");
+    } else {
+      // Handle error
+      console.log(error);
+      toast.error("Form submission failed");
+    }
   };
 
   return (
