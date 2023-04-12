@@ -1,16 +1,17 @@
-import { useState, useEffect, useContext} from "react";
+import { useState, useEffect, useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import validationSchema from "./Schema";
 import Button from "./Button";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useUserContext } from "../context/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 
 // if  user logs in 5 times
 const MAX_LOGIN_ATTEMPTS = 5;
 function LoginPage({}) {
   const initialValues = { email: "", password: "" };
+  const { login, error } = useAuth();
 
   const [loginAttempts, setLoginAttempts] = useState(0);
   const [loginLocked, setLoginLocked] = useState(false);
@@ -26,41 +27,14 @@ function LoginPage({}) {
       }, 5 * 60 * 1000); // account locked in for 5  minutes
     }
   }, [loginAttempts]);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-  const handleSubmit = async (values, { setSubmitting }) => {
-    // handle locked account
-    if (loginLocked) {
-      // Handle locked account error
-      toast.error("Please wait for 5 minutes to unlock your account.");
-      return;
+    try {
+      await login(email, password);
+    } catch (error) {
+      console.error(error);
     }
-    // Call an API to authenticate the user's credentials
-    const response = await fetch(
-      "https://staging-auth-api.zoficash.com/api/v1/account-login",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          email: values.email,
-          password: values.password,
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    if (response.ok) {
-      const data = await response.json();
-      setUser(data.user);
-      setIsAuthenticated(true);
-      router.push("/dashboard");
-      toast.success("LogIn Successfully");
-    } else {
-      setLoginAttempts((prevAttempts) => prevAttempts + 1);
-      // Handle error
-      console.log(response);
-      toast.error("Failed to login.");
-    }
-    setSubmitting(false);
   };
   return (
     <div className="flex justify-center items-center h-screen">
@@ -129,7 +103,9 @@ function LoginPage({}) {
               </a>
             </div>
             <div className="flex items-center justify-center ">
-              <Button type="submit" onSubmit={handleSubmit}>LOG IN </Button>
+              <Button type="submit" onSubmit={handleSubmit}>
+                LOG IN{" "}
+              </Button>
             </div>
           </Form>
         )}

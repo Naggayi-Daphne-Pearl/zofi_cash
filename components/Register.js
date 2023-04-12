@@ -16,9 +16,12 @@ function Register() {
     phoneNumber: "",
     countryCode: "",
     roles: "",
+    security_question: "",
+    security_answer: "",
   };
 
   const router = useRouter();
+  const [error, setError] = useState(null);
 
   const [selectRole, setSelectRole] = useState("");
 
@@ -32,34 +35,23 @@ function Register() {
     setSelectedCountryCode(event.target.value);
   }
 
-  const handleSubmit = async (e) => {
-    // e.preventDefault();
-    // Call an API to submit the user's KYC details
-    const response = await fetch(
-      "https://staging-auth-api.zoficash.com/api/v1//account-registration",
-      {
-        method: "POST",
-        body: JSON.stringify({
-          email: e.target.email.value,
-          password: e.target.password.value,
-          roles: selectRole,
-          repeat_password: e.target.confirmPassword.value,
-          phoneNumber: e.target.phoneNumber.value,
-          country_code: selectedCountryCode,
-          ip: "localhost:3000",
-        }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    if (response.ok) {
-      router.push("/login");
-      toast.success("Form submitted successfully!");
-    } else {
-      // Handle error
-      console.log(error);
-      toast.error("Form submission failed");
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const newUserData = {
+        email,
+        password,
+        confirmPassword,
+        phoneNumber,
+        countryCode,
+        roles,
+        security_question,
+        security_answer,
+      };
+      await registerApi(newUserData);
+      router.push("/success");
+    } catch (error) {
+      setError(error.message);
     }
   };
 
@@ -178,62 +170,63 @@ function Register() {
                   className="text-red-500 text-xs italic"
                 />
               </div>
-
-              <div className="mb-1">
-                <label
-                  htmlFor="code"
-                  className="block text-gray-700 font-bold mb-1 text-xl justify-center flex pb-2"
-                >
-                  Country Code
-                </label>
-                <Field
-                  as="select"
-                  id="countryCode"
-                  name="countryCode"
-                  value={selectedCountryCode}
-                  onChange={handleCountryCodeChange}
-                  className={
-                    errors.countryCode && touched.countryCode
-                      ? "border-red-500 appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      : "appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  }
-                >
-                  <option value="">+256</option>
-                  {countryCodes.map((country) => (
-                    <option key={country.code} value={country.code}>
-                      {country.code}
-                    </option>
-                  ))}
-                </Field>
-                <ErrorMessage
-                  name="countryCode"
-                  component="div"
-                  className="text-red-500 text-xs italic"
-                />
-              </div>
-
-              <div className="mb-1">
-                <label
-                  htmlFor="phoneNumber"
-                  className="block text-gray-700 font-bold mb-1 text-xl justify-center flex pb-2"
-                >
-                  Phone Number
-                </label>
-                <Field
-                  type="tel"
-                  id="phoneNumber"
-                  name="phone"
-                  className={
-                    errors.phoneNumber && touched.phoneNumber
-                      ? "border-red-500 appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      : "appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  }
-                />
-                <ErrorMessage
-                  name="phoneNumber"
-                  component="div"
-                  className="text-red-500 text-xs italic"
-                />
+              {/* phone number */}
+              <div className="grid grid-cols-2 justify-center flex">
+                <div className="mb-1">
+                  <label
+                    htmlFor="code"
+                    className="block text-gray-700 font-bold mb-1 text-xl justify-center flex pb-2"
+                  >
+                   code
+                  </label>
+                  <Field
+                    as="select"
+                    id="countryCode"
+                    name="countryCode"
+                    value={selectedCountryCode}
+                    onChange={handleCountryCodeChange}
+                    className={
+                      errors.countryCode && touched.countryCode
+                        ? "border-red-500 appearance-none border rounded w-1/4 py-2 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        : "appearance-none border rounded w-1/4 py-2 px-1 text-gray-700 l focus:outline-none focus:shadow-outline"
+                    }
+                  >
+                    <option value="">+256</option>
+                    {countryCodes.map((country) => (
+                      <option key={country.code} value={country.code}>
+                        {country.code}
+                      </option>
+                    ))}
+                  </Field>
+                  <ErrorMessage
+                    name="countryCode"
+                    component="div"
+                    className="text-red-500 text-xs italic"
+                  />
+                </div>
+                <div className="mb-1">
+                  <label
+                    htmlFor="phoneNumber"
+                    className="block text-gray-700 font-bold mb-1 text-xl justify-center flex pb-2"
+                  >
+                    Phone Number
+                  </label>
+                  <Field
+                    type="tel"
+                    id="phoneNumber"
+                    name="phone"
+                    className={
+                      errors.phoneNumber && touched.phoneNumber
+                        ? "border-red-500 appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        : "appearance-none border rounded w-full py-2 px-6 text-gray-700 focus:outline-none focus:shadow-outline"
+                    }
+                  />
+                  <ErrorMessage
+                    name="phoneNumber"
+                    component="div"
+                    className="text-red-500 text-xs italic"
+                  />
+                </div>
               </div>
             </div>
 
