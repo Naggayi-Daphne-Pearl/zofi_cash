@@ -1,14 +1,60 @@
+import { useState, useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import validationSchema from "./Schema";
 import Button from "./Button";
+import { useRouter } from "next/router";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
+// if  user logs in 5 times
+const MAX_LOGIN_ATTEMPTS = 5;
 function LoginPage() {
   const initialValues = { email: "", password: "" };
 
-  const handleSubmit = (values) => {
-    // handle form submission
-  };
+  const [loginAttempts, setLoginAttempts] = useState(0);
+  const [loginLocked, setLoginLocked] = useState(false);
+  const router = useRouter();
 
+  // handle maximum login attempts
+  useEffect(() => {
+    if (loginAttempts >= MAX_LOGIN_ATTEMPTS) {
+      setLoginLocked(true);
+      setTimeout(() => {
+        setLoginAttempts(0);
+        setLoginLocked(false);
+      }, 5 * 60 * 1000); // account locked in for 5  minutes
+    }
+  }, [loginAttempts]);
+
+  const handleSubmit = async (e, value) => {
+    e.preventDefault();
+    // handle locked account
+    if (loginLocked) {
+      // Handle locked account error
+      toast.error("Please wait for 5 minutes to unlock your account.");
+      return;
+    }
+    // Call an API to authenticate the user's credentials
+    const response = await fetch("/api/login", {
+      method: "POST",
+      body: JSON.stringify({
+        email: value.email,
+        password: value.password,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    if (response.ok) {
+      router.push("/dashboard");
+      toast.success("LogIn Successfully");
+    } else {
+      setLoginAttempts((prevAttempts) => prevAttempts + 1);
+      // Handle error
+      console.log(response);
+      toast.error("Failed to login.");
+    }
+  };
   return (
     <div className="flex justify-center items-center h-screen">
       <Formik
