@@ -10,4 +10,16 @@ function Login() {
   );
 }
 
+export async function getServerSideProps(context) {
+  // fetch data from API and return as props
+  const res = await fetch("https://staging-auth-api.zoficash.com/api/v1/account-login");
+  const data = await res.json();
+
+  return {
+    props: {
+      data,
+    },
+  };
+}
+
 export default Login;
