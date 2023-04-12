@@ -1,4 +1,5 @@
 import React from "react";
+import { countryCodes } from "./data";
 
 import * as Yup from "yup";
 
@@ -14,6 +15,8 @@ const validationSchema = Yup.object({
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password"), null], "Passwords must match")
     .required("Required"),
+  countryCode: Yup.string(),
+  role: Yup.string(),
 });
 
 export default validationSchema;
