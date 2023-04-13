@@ -40,6 +40,7 @@ const validationSchema = (activeTab) => {
     country_code: Yup.string(),
     role: Yup.string(),
     security_answer: Yup.string().required("Required"),
+    security_question: Yup.string().required("Required"),
     code: Yup.string().required("Required"),
     // if the active tab is phone_number, then validate the phone_number field else validate the email field
     [activeTab]:
