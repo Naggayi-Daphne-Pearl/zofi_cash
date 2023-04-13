@@ -3,7 +3,7 @@
 // Example endpoint URLs
 const USER_DETAILS_URL = "/api/user-details";
 const UPDATE_USER_DETAILS_URL = "/api/update-user-details";
-const DEACTIVATE_USER_URL = "/api/deactivate-user";
+const DEACTIVATE_USER_URL = "https://staging-auth-api.zoficash.com/api/v1/deactivate-account/:account_id";
 
 // Function to retrieve the details of the currently logged-in user
 export const getUserDetailsApi = async () => {
