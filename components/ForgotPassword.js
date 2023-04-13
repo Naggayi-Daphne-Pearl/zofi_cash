@@ -52,6 +52,7 @@ const ForgotPassword = () => {
                   type="email"
                   id="email"
                   name="email"
+                  placeholder="Enter your email"
                   className={
                     errors.email && touched.email
                       ? "border-red-500 appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -66,9 +67,11 @@ const ForgotPassword = () => {
               </div>
               {error && <div>{error}</div>}
               <div className="flex items-center justify-center ">
-                <Button type="submit" onSubmit={handleSubmit}>
-                  Reset Password
-                </Button>
+                <a href="/auth/resetpassword">
+                  <Button type="submit" onSubmit={handleSubmit}>
+                    Reset Password
+                  </Button>
+                </a>
               </div>
             </Form>
           )}

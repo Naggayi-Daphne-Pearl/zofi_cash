@@ -45,67 +45,21 @@ const ForgotPassword = () => {
                 htmlFor="text"
                 className="block text-gray-700 font-bold mb-2 text-2xl justify-center flex pb-3"
               >
-                Email
+                Email code 
               </label>
               <Field
-                type="text"
-                id="security_answer"
-                name="security_answer"
+                type="code"
+                id="code"
+                name="code"
+                placeholder="Enter code here"
                 className={
-                  errors.security_answer && touched.security_answer
+                  errors.code && touched.code
                     ? "border-red-500 appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     : "appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 }
               />
               <ErrorMessage
-                name="security_answer"
-                component="div"
-                className="text-red-500 text-xs italic"
-              />
-            </div>
-            <div className="mb-6">
-              <label
-                htmlFor="password"
-                className="block text-gray-700 font-bold mb-2 text-2xl justify-center flex pb-3"
-              >
-                New Password
-              </label>
-              <Field
-                type="password"
-                id="password"
-                name="password"
-                className={
-                  errors.password && touched.password
-                    ? "border-red-500 appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    : "appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                }
-              />
-              <ErrorMessage
-                name="password"
-                component="div"
-                className="text-red-500 text-xs italic"
-              />
-            </div>
-
-            <div className="mb-6">
-              <label
-                htmlFor="password"
-                className="block text-gray-700 font-bold mb-2 text-2xl justify-center flex pb-3"
-              >
-                Confirm Password
-              </label>
-              <Field
-                type="password"
-                id="repeat_password"
-                name="repeat_password"
-                className={
-                  errors.repeat_password && touched.repeat_password
-                    ? "border-red-500 appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    : "appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                }
-              />
-              <ErrorMessage
-                name="repeat_password"
+                name="code"
                 component="div"
                 className="text-red-500 text-xs italic"
               />

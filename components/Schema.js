@@ -20,6 +20,8 @@ const validationSchema = Yup.object({
   country_code: Yup.string(),
   role: Yup.string(),
   security_answer: Yup.string().required("Required"),
+  code: Yup.string().required("Required"),
+
 });
 
 export default validationSchema;
