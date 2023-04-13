@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import validationSchema from "./Schema";
 import Button from "./Button";
-import {countryCodes } from "./data";
+import { countryCodes } from "./data";
 import { roles } from "./data";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
@@ -40,14 +40,13 @@ function Register() {
     event.preventDefault();
     try {
       const newUserData = {
+        phone_number,
         email,
+        roles,
         password,
         repeat_password,
-        phone_number,
-        country_code,
-        roles,
-        security_question,
-        security_answer,
+        ip: "localhost:3000",
+        country_code:'+256',
       };
       await registerApi(newUserData);
       router.push("/auth/security");
