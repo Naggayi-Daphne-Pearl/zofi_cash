@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import validationSchema from "./Schema";
 import Button from "./Button";
-import { country_codes } from "./data";
+import {countryCodes } from "./data";
 import { roles } from "./data";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
@@ -172,62 +172,61 @@ function Register() {
                 />
               </div>
               {/* phone number */}
-              <div className="grid grid-cols-2 justify-center flex">
-                <div className="mb-1">
-                  <label
-                    htmlFor="code"
-                    className="block text-gray-700 font-bold mb-1 text-xl justify-center flex pb-2"
-                  >
-                    code
-                  </label>
-                  <Field
-                    as="select"
-                    id="country_code"
-                    name="country_code"
-                    value={selectedcountry_code}
-                    onChange={handlecountry_codeChange}
-                    className={
-                      errors.country_code && touched.country_code
-                        ? "border-red-500 appearance-none border rounded w-1/4 py-2 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        : "appearance-none border rounded w-1/4 py-2 px-1 text-gray-700 l focus:outline-none focus:shadow-outline"
-                    }
-                  >
-                    {/* <option value="">+256</option>
-                    {country_codes.map((country) => (
-                      <option key={country.code} value={country.code}>
-                        {country.code}
-                      </option>
-                    ))} */}
-                  </Field>
-                  <ErrorMessage
-                    name="country_code"
-                    component="div"
-                    className="text-red-500 text-xs italic"
-                  />
-                </div>
-                <div className="mb-1">
-                  <label
-                    htmlFor="phone_number"
-                    className="block text-gray-700 font-bold mb-1 text-xl justify-center flex pb-2"
-                  >
-                    Phone Number
-                  </label>
-                  <Field
-                    type="tel"
-                    id="phone_number"
-                    name="phone_number"
-                    className={
-                      errors.phone_number && touched.phone_number
-                        ? "border-red-500 appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                        : "appearance-none border rounded w-full py-2 px-6 text-gray-700 focus:outline-none focus:shadow-outline"
-                    }
-                  />
-                  <ErrorMessage
-                    name="phone_number"
-                    component="div"
-                    className="text-red-500 text-xs italic"
-                  />
-                </div>
+
+              <div className="mb-1">
+                <label
+                  htmlFor="code"
+                  className="block text-gray-700 font-bold mb-1 text-xl justify-center flex pb-2"
+                >
+                  code
+                </label>
+                <Field
+                  as="select"
+                  id="country_code"
+                  name="country_code"
+                  value={selectedcountry_code}
+                  onChange={handlecountry_codeChange}
+                  className={
+                    errors.country_code && touched.country_code
+                      ? "border-red-500 appearance-none border rounded w-1/4 py-2 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      : "appearance-none border rounded w-1/4 py-2 px-1 text-gray-700 l focus:outline-none focus:shadow-outline"
+                  }
+                >
+                  <option value="">+256</option>
+                  {countryCodes.map((country) => (
+                    <option key={country.code} value={country.code}>
+                      {country.code}
+                    </option>
+                  ))}
+                </Field>
+                <ErrorMessage
+                  name="country_code"
+                  component="div"
+                  className="text-red-500 text-xs italic"
+                />
+              </div>
+              <div className="mb-1">
+                <label
+                  htmlFor="phone_number"
+                  className="block text-gray-700 font-bold mb-1 text-xl justify-center flex pb-2"
+                >
+                  Phone Number
+                </label>
+                <Field
+                  type="tel"
+                  id="phone_number"
+                  name="phone_number"
+                  className={
+                    errors.phone_number && touched.phone_number
+                      ? "border-red-500 appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                      : "appearance-none border rounded w-full py-2 px-6 text-gray-700 focus:outline-none focus:shadow-outline"
+                  }
+                />
+                <ErrorMessage
+                  name="phone_number"
+                  component="div"
+                  className="text-red-500 text-xs italic"
+                />
               </div>
             </div>
 
