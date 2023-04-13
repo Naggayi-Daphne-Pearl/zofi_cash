@@ -121,6 +121,14 @@ function LoginPage({}) {
                   className="w-full border border-gray-300 p-2 rounded"
                 />
               </div>
+              <div className="block">
+                <a
+                  href="/auth/forgotpassword"
+                  className="text-primary underline px-4"
+                >
+                  Forgot Password ?
+                </a>
+              </div>
               <Button
                 type="submit"
                 className="flex items-center justify-center mt-6"
