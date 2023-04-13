@@ -1,11 +1,14 @@
 // This module contains functions for interacting with the authentication API
 
 // Example endpoint URLs
-const LOGIN_URL = "/api/login";
-const REGISTER_URL = "/api/register";
+const LOGIN_URL = "https://staging-auth-api.zoficash.com/api/v1/account-login";
+const REGISTER_URL =
+  "https://staging-auth-api.zoficash.com/api/v1//account-registration";
 const VERIFY_EMAIL_URL = "/api/verify-email";
-const VERIFY_PHONE_URL = "/api/verify-phone";
-const RESET_PASSWORD_URL = "/api/reset-password";
+const VERIFY_PHONE_URL =
+  "https://staging-auth-api.zoficash.com/api/v1/send-sms";
+const RESET_PASSWORD_URL =
+  "https://staging-auth-api.zoficash.com/api/v1/user-reset-account-password/";
 
 // Function to log in the user
 export const loginApi = async (email, password) => {
