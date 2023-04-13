@@ -10,33 +10,32 @@ const VerifyAccount = () => {
   // tab
   const [activeTab, setActiveTab] = useState("phone");
 
- const handleSubmit = async (values, { setSubmitting, setErrors }) => {
-  event.preventDefault();
-  try {
-    let apiUrl;
-    if (activeTab === "phone") {
-      apiUrl = "https://staging-auth-api.zoficash.com/api/v1/send-sms";
-    } else {
-      apiUrl = "https://staging-auth-api.zoficash.com/api/v1/send-email";
+  const handleSubmit = async (values, { setSubmitting, setErrors }) => {
+    event.preventDefault();
+    try {
+      let apiUrl;
+      if (activeTab === "phone") {
+        apiUrl = "https://staging-auth-api.zoficash.com/api/v1/send-sms";
+      } else {
+        apiUrl = "https://staging-auth-api.zoficash.com/api/v1/send-email";
+      }
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(values),
+      });
+      if (!response.ok) {
+        throw new Error(`Failed to send verification ${activeTab}.`);
+      }
+      setOtpSent(true);
+    } catch (error) {
+      setErrors({ [activeTab]: error.message });
+    } finally {
+      setSubmitting(false);
     }
-    const response = await fetch(apiUrl, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    });
-    if (!response.ok) {
-      throw new Error(`Failed to send verification ${activeTab}.`);
-    }
-    setOtpSent(true);
-  } catch (error) {
-    setErrors({ [activeTab]: error.message });
-  } finally {
-    setSubmitting(false);
-  }
-};
-
+  };
 
   return (
     <div>
@@ -92,10 +91,10 @@ const VerifyAccount = () => {
 
                   <Button
                     type="submit"
-                    className="flex items-center justify-center mt-6"
+                    className="flex items-center justify-center mt-6 text-3xl"
                     disabled={isSubmitting}
                   >
-                    {isSubmitting ? "Submitting..." : "Verify Phone Number"}
+                    {isSubmitting ? "Submitting..." : "Verify Number"}
                   </Button>
                 </div>
               )}
