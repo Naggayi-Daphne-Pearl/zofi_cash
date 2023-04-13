@@ -61,7 +61,7 @@ function LoginPage({}) {
                 name="email"
                 className={
                   errors.email && touched.email
-                    ? "border-red-500 appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                     ? "border-red-500 appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     : "appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 }
               />
@@ -102,9 +102,10 @@ function LoginPage({}) {
                 Don't have an account
               </a>
             </div>
+            {error && <div>{error}</div>}
             <div className="flex items-center justify-center ">
               <Button type="submit" onSubmit={handleSubmit}>
-                LOG IN{" "}
+                LOG IN
               </Button>
             </div>
           </Form>
