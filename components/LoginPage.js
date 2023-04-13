@@ -42,11 +42,11 @@ function LoginPage({}) {
   return (
     <div>
       <div className="max-w-lg mx-auto h-screen my-20 items-center">
-        <h1 className="flex justify-center text-4xl text-primary py-10 text-header ">
+        <h1 className="flex justify-center sm:text-3xl text-5xl text-primary py-10 text-header font-bold">
           Zofi Cash
         </h1>
         <div className="bg-white shadow-md ">
-          <h1 className="flex justify-center text-3xl text-primary py-10 font-bold">
+          <h1 className="flex justify-center text-3xl text-primary py-10 font-semi">
             Login Account
           </h1>
           <button
@@ -72,7 +72,7 @@ function LoginPage({}) {
           onSubmit={handleSubmit}
         >
           {({ isSubmitting }) => (
-            <Form className="bg-white shadow-md px-20 pt-6 pb-8 mb-4">
+            <Form className="bg-white shadow-md px-20 pt-6 pb-8 mb-4 ">
               {activeTab === "phone" && (
                 <div className="mb-4">
                   <label htmlFor="phone" className="block font-medium mb-2">

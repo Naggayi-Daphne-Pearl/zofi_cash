@@ -41,7 +41,7 @@ const VerifyAccount = () => {
   return (
     <div>
       <div className="max-w-lg mx-auto h-screen my-20 items-center">
-        <h1 className="flex justify-center text-4xl text-primary py-10 text-header ">
+        <h1 className="flex justify-center text-5xl font-bold sm:text-3xl text-primary py-10 text-header ">
           Zofi Cash
         </h1>
         <div className="bg-white shadow-md ">
