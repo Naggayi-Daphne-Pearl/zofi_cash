@@ -4,7 +4,7 @@
 const LOGIN_URL = "https://staging-auth-api.zoficash.com/api/v1/account-login";
 const REGISTER_URL =
   "https://staging-auth-api.zoficash.com/api/v1//account-registration";
-const VERIFY_EMAIL_URL = "/api/verify-email";
+const VERIFY_EMAIL_URL = "https://staging-auth-api.zoficash.com/api/v1/send-email";
 const VERIFY_PHONE_URL =
   "https://staging-auth-api.zoficash.com/api/v1/send-sms";
 const RESET_PASSWORD_URL =
