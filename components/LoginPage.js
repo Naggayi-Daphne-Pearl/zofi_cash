@@ -126,11 +126,7 @@ function LoginPage({}) {
                   type="password"
                   name="password"
                   id="password"
-                  className={
-                    errors.password && touched.password
-                      ? "border-red-500 appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      : "appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  }
+                  className="w-full border border-gray-300 p-2 rounded"
                 />
               </div>
               <div className="block">

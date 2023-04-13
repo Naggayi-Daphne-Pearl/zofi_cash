@@ -69,7 +69,7 @@ const VerifyAccount = () => {
           validationSchema={validationSchema(activeTab)}
           onSubmit={handleSubmit}
         >
-          {({ isSubmitting }) => (
+          {({ isSubmitting, errors, touched }) => (
             <Form className="bg-white shadow-md px-20 pt-6 pb-8 mb-4">
               {activeTab === "phone" && (
                 <div className="mb-4">
@@ -80,7 +80,11 @@ const VerifyAccount = () => {
                     type="tel"
                     name="phone_number"
                     id="phone_number"
-                    className="w-full border border-gray-300 p-2 rounded"
+                    className={
+                      errors.phone_number && touched.phone_number
+                        ? "border-red-500 appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        : "appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    }
                   />
 
                   <ErrorMessage
@@ -107,7 +111,11 @@ const VerifyAccount = () => {
                     type="email"
                     name="email"
                     id="email"
-                    className="w-full border border-gray-300 p-2 rounded"
+                    className={
+                      errors.email && touched.email
+                        ? "border-red-500 appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        : "appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    }
                   />
                   <ErrorMessage
                     name={activeTab === "email" ? "email" : "phone_number"}
