@@ -10,23 +10,25 @@ import { useAuth } from "../contexts/AuthContext";
 // if  user logs in 5 times
 const MAX_LOGIN_ATTEMPTS = 5;
 function LoginPage({}) {
-  const initialValues = { email: "", password: "" };
+  const initialValues = { email: "", password: "", phone_number: "" };
   const { login, error } = useAuth();
 
   const [loginAttempts, setLoginAttempts] = useState(0);
   const [loginLocked, setLoginLocked] = useState(false);
+  // tab
+  const [activeTab, setActiveTab] = useState("phone");
   const router = useRouter();
 
   // handle maximum login attempts
-  useEffect(() => {
-    if (loginAttempts >= MAX_LOGIN_ATTEMPTS) {
-      setLoginLocked(true);
-      setTimeout(() => {
-        setLoginAttempts(0);
-        setLoginLocked(false);
-      }, 5 * 60 * 1000); // account locked in for 5  minutes
-    }
-  }, [loginAttempts]);
+  // useEffect(() => {
+  //   if (loginAttempts >= MAX_LOGIN_ATTEMPTS) {
+  //     setLoginLocked(true);
+  //     setTimeout(() => {
+  //       setLoginAttempts(0);
+  //       setLoginLocked(false);
+  //     }, 5 * 60 * 1000); // account locked in for 5  minutes
+  //   }
+  // }, [loginAttempts]);
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -36,87 +38,100 @@ function LoginPage({}) {
       console.error(error);
     }
   };
+
   return (
-    <div className="flex justify-center items-center h-screen">
-      <Formik
-        initialValues={initialValues}
-        validationSchema={validationSchema}
-        onSubmit={handleSubmit}
-      >
-        {({ errors, touched }) => (
-          <Form className="bg-white shadow-md rounded px-20 pt-6 pb-8 mb-4">
-            <h1 className="flex justify-center text-3xl text-primary py-8">
-              Login Form
-            </h1>
-            <div className="mb-4">
-              <label
-                htmlFor="email"
-                className="block text-gray-700 font-bold mb-2 text-2xl justify-center flex pb-3"
+    <div>
+      <div className="max-w-lg mx-auto h-screen my-20 items-center">
+        <h1 className="flex justify-center text-4xl text-primary py-10 text-header ">
+          Zofi Cash
+        </h1>
+        <div className="bg-white shadow-md ">
+          <h1 className="flex justify-center text-3xl text-primary py-10 font-bold">
+            Login Account
+          </h1>
+          <button
+            className={`py-2 px-6 font-semibold border-b-2 ${
+              activeTab === "phone" ? "border-primary" : ""
+            }`}
+            onClick={() => setActiveTab("phone")}
+          >
+            Phone
+          </button>
+          <button
+            className={`py-2 px-4 font-semibold border-b-2 ${
+              activeTab === "email" ? "border-blue-500" : ""
+            }`}
+            onClick={() => setActiveTab("email")}
+          >
+            Email
+          </button>
+        </div>
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema(activeTab)}
+          onSubmit={handleSubmit}
+        >
+          {({ isSubmitting }) => (
+            <Form className="bg-white shadow-md px-20 pt-6 pb-8 mb-4">
+              {activeTab === "phone" && (
+                <div className="mb-4">
+                  <label htmlFor="phone" className="block font-medium mb-2">
+                    Phone Number
+                  </label>
+                  <Field
+                    type="tel"
+                    name="phone_number"
+                    id="phone_number"
+                    className="w-full border border-gray-300 p-2 rounded"
+                  />
+
+                  <ErrorMessage
+                    name={activeTab === "phone" ? "phone_number" : "email"}
+                    component="div"
+                    className="text-red-500 text-xs italic"
+                  />
+                </div>
+              )}
+              {activeTab === "email" && (
+                <div className="mb-4">
+                  <label htmlFor="email" className="block font-medium mb-2">
+                    Email Address
+                  </label>
+                  <Field
+                    type="email"
+                    name="email"
+                    id="email"
+                    className="w-full border border-gray-300 p-2 rounded"
+                  />
+                  <ErrorMessage
+                    name={activeTab === "email" ? "email" : "phone_number"}
+                    component="div"
+                    className="text-red-500 text-xs italic"
+                  />
+                </div>
+              )}
+              <div className="mb-4">
+                <label htmlFor="password" className="block font-medium mb-2">
+                  Password
+                </label>
+                <Field
+                  type="password"
+                  name="password"
+                  id="password"
+                  className="w-full border border-gray-300 p-2 rounded"
+                />
+              </div>
+              <Button
+                type="submit"
+                className="flex items-center justify-center mt-6"
+                disabled={isSubmitting}
               >
-                Email
-              </label>
-              <Field
-                type="email"
-                id="email"
-                name="email"
-                className={
-                  errors.email && touched.email
-                    ? "border-red-500 appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    : "appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                }
-              />
-              <ErrorMessage
-                name="email"
-                component="div"
-                className="text-red-500 text-xs italic"
-              />
-            </div>
-            <div className="mb-6">
-              <label
-                htmlFor="password"
-                className="block text-gray-700 font-bold mb-2 text-2xl justify-center flex pb-3"
-              >
-                Password
-              </label>
-              <Field
-                type="password"
-                id="password"
-                name="password"
-                className={
-                  errors.password && touched.password
-                    ? "border-red-500 appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                    : "appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                }
-              />
-              <ErrorMessage
-                name="password"
-                component="div"
-                className="text-red-500 text-xs italic"
-              />
-            </div>
-            <div className="flex sm:block">
-              <a
-                href="/auth/signup"
-                className=" flex justify-start text-primary underline"
-              >
-                Don't have an account
-              </a>
-              <a
-                href="/auth/forgotpassword"
-                className="flex  justify-start text-primary underline"
-              >
-                Forgot Password ?
-              </a>
-            </div>
-            {error && <div>{error}</div>}
-            <div className="flex items-center justify-center ">
-              <Button type="submit" onSubmit={handleSubmit}>
-                LOG IN
+                {isSubmitting ? "Submitting..." : "Log In"}
               </Button>
-            </div>
-          </Form>
-        )}
-      </Formik>
+            </Form>
+          )}
+        </Formik>
+      </div>
     </div>
   );
 }
