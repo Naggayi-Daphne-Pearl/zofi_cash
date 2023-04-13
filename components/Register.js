@@ -1,23 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import validationSchema from "./Schema";
 import Button from "./Button";
-import { countryCodes } from "./data";
+import { country_codes } from "./data";
 import { roles } from "./data";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { loginApi, registerApi } from "@/pages/api/auth";
+import { AuthContext } from "@/contexts/AuthContext";
 
 function Register() {
   const initialValues = {
     email: "",
     password: "",
-    confirmPassword: "",
-    phoneNumber: "",
-    countryCode: "",
+    repeat_password: "",
+    phone_number: "",
+    country_code: "",
     roles: "",
-    security_question: "",
-    security_answer: "",
+    ip: "localhost:3000",
   };
 
   const router = useRouter();
@@ -29,10 +30,10 @@ function Register() {
     setSelectRole(event.target.value);
   }
 
-  const [selectedCountryCode, setSelectedCountryCode] = useState("");
+  const [selectedcountry_code, setSelectedcountry_code] = useState("");
 
-  function handleCountryCodeChange(event) {
-    setSelectedCountryCode(event.target.value);
+  function handlecountry_codeChange(event) {
+    setSelectedcountry_code(event.target.value);
   }
 
   const handleSubmit = async (event) => {
@@ -41,9 +42,9 @@ function Register() {
       const newUserData = {
         email,
         password,
-        confirmPassword,
-        phoneNumber,
-        countryCode,
+        repeat_password,
+        phone_number,
+        country_code,
         roles,
         security_question,
         security_answer,
@@ -149,23 +150,23 @@ function Register() {
 
               <div className="mb-1">
                 <label
-                  htmlFor="confirmPassword"
+                  htmlFor="repeat_password"
                   className="block text-gray-700 font-bold mb-1 text-xl justify-center flex pb-1"
                 >
                   Confirm Password
                 </label>
                 <Field
-                  type="password"
-                  id="confirmPassword"
-                  name="confirmPassword"
+                  type="repeat_password"
+                  id="repeat_password"
+                  name="repeat_password"
                   className={
-                    errors.confirmPassword && touched.confirmPassword
+                    errors.repeat_password && touched.repeat_password
                       ? "border-red-500 appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                       : "appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   }
                 />
                 <ErrorMessage
-                  name="confirmPassword"
+                  name="repeat_password"
                   component="div"
                   className="text-red-500 text-xs italic"
                 />
@@ -177,52 +178,52 @@ function Register() {
                     htmlFor="code"
                     className="block text-gray-700 font-bold mb-1 text-xl justify-center flex pb-2"
                   >
-                   code
+                    code
                   </label>
                   <Field
                     as="select"
-                    id="countryCode"
-                    name="countryCode"
-                    value={selectedCountryCode}
-                    onChange={handleCountryCodeChange}
+                    id="country_code"
+                    name="country_code"
+                    value={selectedcountry_code}
+                    onChange={handlecountry_codeChange}
                     className={
-                      errors.countryCode && touched.countryCode
+                      errors.country_code && touched.country_code
                         ? "border-red-500 appearance-none border rounded w-1/4 py-2 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         : "appearance-none border rounded w-1/4 py-2 px-1 text-gray-700 l focus:outline-none focus:shadow-outline"
                     }
                   >
                     <option value="">+256</option>
-                    {countryCodes.map((country) => (
+                    {country_codes.map((country) => (
                       <option key={country.code} value={country.code}>
                         {country.code}
                       </option>
                     ))}
                   </Field>
                   <ErrorMessage
-                    name="countryCode"
+                    name="country_code"
                     component="div"
                     className="text-red-500 text-xs italic"
                   />
                 </div>
                 <div className="mb-1">
                   <label
-                    htmlFor="phoneNumber"
+                    htmlFor="phone_number"
                     className="block text-gray-700 font-bold mb-1 text-xl justify-center flex pb-2"
                   >
                     Phone Number
                   </label>
                   <Field
                     type="tel"
-                    id="phoneNumber"
-                    name="phone"
+                    id="phone_number"
+                    name="phone_number"
                     className={
-                      errors.phoneNumber && touched.phoneNumber
+                      errors.phone_number && touched.phone_number
                         ? "border-red-500 appearance-none border rounded w-full py-2 px-6 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                         : "appearance-none border rounded w-full py-2 px-6 text-gray-700 focus:outline-none focus:shadow-outline"
                     }
                   />
                   <ErrorMessage
-                    name="phoneNumber"
+                    name="phone_number"
                     component="div"
                     className="text-red-500 text-xs italic"
                   />
