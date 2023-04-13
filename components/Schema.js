@@ -4,11 +4,9 @@ import { countryCodes } from "./data";
 import * as Yup from "yup";
 
 const validationSchema = Yup.object({
-  phone_number: Yup.string().matches(
-    /^[0-9]{10}$/,
-    "Please enter a valid phone number"
-  ),
-  // .required("Phone number is required"),
+  phone_number: Yup.string()
+    .matches(/^[0-9]{10}$/, "Please enter a valid phone number")
+    .required("Phone number is required"),
 
   email: Yup.string().email("Invalid email address").required("Required"),
   password: Yup.string()
@@ -21,7 +19,6 @@ const validationSchema = Yup.object({
   role: Yup.string(),
   security_answer: Yup.string().required("Required"),
   code: Yup.string().required("Required"),
-
 });
 
 export default validationSchema;
