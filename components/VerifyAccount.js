@@ -114,15 +114,21 @@ const VerifyAccount = () => {
                     component="div"
                     className="text-red-500 text-xs italic"
                   />
+
                   <Button
                     type="submit"
-                    className="flex items-center justify-center mt-6"
+                    className="flex items-center justify-between mt-8"
                     disabled={isSubmitting}
                   >
                     {isSubmitting ? "Submitting..." : "Verify Email"}
                   </Button>
                 </div>
               )}
+              <div>
+                <a href="/auth/login" className="text-primary underline px-4">
+                  Already have an account?
+                </a>
+              </div>
             </Form>
           )}
         </Formik>
