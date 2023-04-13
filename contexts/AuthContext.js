@@ -4,6 +4,7 @@ import {
   loginApi,
   registerApi,
   resetPasswordApi,
+  setSecurityAnswerApi,
 } from "../pages/api/auth";
 
 const AuthContext = createContext();
@@ -53,6 +54,16 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const setSecurityAnswer = async (security_question, security_answer) => {
+    try {
+      await setSecurityAnswerApi(security_question, security_answer);
+      setError(null);
+    } catch (error) {
+      setError("Failed to set security answer");
+      throw error;
+    }
+  };
+
   const logout = () => {
     setUser(null);
   };
@@ -67,6 +78,7 @@ export const AuthProvider = ({ children }) => {
         forgotPassword,
         logout,
         resetPassword,
+        setSecurityAnswer,
       }}
     >
       {children}

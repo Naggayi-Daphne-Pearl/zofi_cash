@@ -112,13 +112,13 @@ export const resetPasswordApi = async (
 
 // Set up Security Answer
 export const setSecurityAnswerApi = async (
-  securityQuestionSetupId,
-  securityAnswer
+  security_question,
+  security_answer
 ) => {
   const response = await fetch(
     SET_SECURITY_ANSWER_URL.replace(
       ":security_question_setup_id",
-      securityQuestionSetupId
+      security_question
     ),
     {
       method: "POST",
@@ -126,7 +126,7 @@ export const setSecurityAnswerApi = async (
         "Content-Type": "application/json",
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
-      body: JSON.stringify({ securityAnswer }),
+      body: JSON.stringify({ security_answer }),
     }
   );
 
