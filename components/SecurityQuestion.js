@@ -9,6 +9,9 @@ import { useAuth } from "../contexts/AuthContext";
 
 const SecurityQuestion = () => {
   const initialValues = { security_answer: "", security_question: "" };
+  const [error, setError] = useState(null);
+
+  const router = useRouter();
 
   const questions = [
     { question: "What is your city of birth?" },
@@ -19,8 +22,23 @@ const SecurityQuestion = () => {
   function handleChangeQuestion(event) {
     setSelectQuestion(event.target.value);
   }
+  const { setSecurityAnswer } = useAuth();
 
-  const handleSubmit = async (event) => {};
+  const handleSubmit = async (event, value) => {
+    event.preventDefault();
+    const security_question = security_question.value;
+    const security_answer = security_answer.value;
+    try {
+      await setSecurityAnswer(security_question, security_answer);
+      // handle success case
+      router.push("/auth/login");
+      toast.success("Security Question Set Successfully");
+    } catch (error) {
+      // handle error case
+      toast.error("Security Question Set Failed");
+      setError(error.message);
+    }
+  };
   return (
     <div>
       <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 ">

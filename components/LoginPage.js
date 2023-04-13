@@ -35,7 +35,7 @@ function LoginPage({}) {
     try {
       await login(email, password);
     } catch (error) {
-      console.error(error);
+      setError(error.message);
     }
   };
 

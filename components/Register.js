@@ -50,7 +50,7 @@ function Register() {
         security_answer,
       };
       await registerApi(newUserData);
-      router.push("/success");
+      router.push("/auth/security");
     } catch (error) {
       setError(error.message);
     }

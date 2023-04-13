@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState,use } from "react";
 import Button from "./Button";
 import validationSchema from "./Schema";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useRouter } from "next/router";
+
 
 const VerifyAccount = () => {
   const initialValues = { email: "" };
   const [otpSent, setOtpSent] = useState(false);
+  const router = useRouter();
 
   // tab
   const [activeTab, setActiveTab] = useState("phone");
@@ -30,6 +33,7 @@ const VerifyAccount = () => {
         throw new Error(`Failed to send verification ${activeTab}.`);
       }
       setOtpSent(true);
+      router.push("/auth/register");
     } catch (error) {
       setErrors({ [activeTab]: error.message });
     } finally {
