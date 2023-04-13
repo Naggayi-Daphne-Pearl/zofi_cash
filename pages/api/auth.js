@@ -87,8 +87,8 @@ export const verifyPhoneApi = async (verificationCode) => {
 // Function to reset a user's password
 export const resetPasswordApi = async (
   email,
-  securityQuestion,
-  securityAnswer,
+  security_question,
+  security_answer,
   newPassword
 ) => {
   const response = await fetch(RESET_PASSWORD_URL, {
@@ -98,8 +98,8 @@ export const resetPasswordApi = async (
     },
     body: JSON.stringify({
       email,
-      securityQuestion,
-      securityAnswer,
+      security_question,
+      security_answer,
       newPassword,
     }),
   });

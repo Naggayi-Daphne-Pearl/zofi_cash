@@ -11,15 +11,14 @@ const ForgotPassword = () => {
     security_answer: "",
   };
 
-  const { forgotPassword, error } = useAuth();
-  const [email, setEmail] = useState("");
+  const { resetPassword, error } = useAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
-    }
+    // if (password !== confirmPassword) {
+    //   setError("Passwords do not match");
+    //   return;
+    // }
     try {
       setError("");
       await resetPassword(security_answer, password);
@@ -35,23 +34,17 @@ const ForgotPassword = () => {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, isSubmitting }) => (
           <Form className="bg-white shadow-md rounded px-20 pt-6 pb-8 mb-4">
             <h1 className="flex justify-center text-3xl text-primary py-8">
               Reset Password
             </h1>
             <div className="mb-4">
-              <label
-                htmlFor="text"
-                className="block text-gray-700 font-bold mb-2 text-2xl justify-center flex pb-3"
-              >
-                Email code 
-              </label>
               <Field
-                type="code"
-                id="code"
-                name="code"
-                placeholder="Enter code here"
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter Email here"
                 className={
                   errors.code && touched.code
                     ? "border-red-500 appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -64,11 +57,33 @@ const ForgotPassword = () => {
                 className="text-red-500 text-xs italic"
               />
             </div>
+            <div className="mb-4">
+              <Field
+                type="password"
+                id="password"
+                name="password"
+                placeholder="Enter your new password"
+                className={
+                  errors.password && touched.password
+                    ? "border-red-500 appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    : "appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                }
+              />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="text-red-500 text-xs italic"
+              />
+            </div>
 
             {error && <div>{error}</div>}
             <div className="flex items-center justify-center ">
-              <Button type="submit" onSubmit={handleSubmit}>
-                Reset Password
+              <Button
+                type="submit"
+                className="flex items-center justify-between mt-8"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Submitting..." : "Reset"}
               </Button>
             </div>
           </Form>

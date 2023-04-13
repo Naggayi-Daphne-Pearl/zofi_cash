@@ -34,9 +34,9 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const resetPassword = async (securityAnswer, password) => {
+  const resetPassword = async (security_answer, password) => {
     try {
-      await resetPasswordApi(securityAnswer, password);
+      await resetPasswordApi(security_answer, password);
       setError(null);
     } catch (error) {
       setError("Failed to reset password");
