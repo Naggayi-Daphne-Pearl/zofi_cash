@@ -8,6 +8,7 @@ const VerifyAccount = () => {
   const [otpSent, setOtpSent] = useState(false);
 
   const handleSubmit = async (values, { setSubmitting, setErrors }) => {
+    event.preventDefault();
     try {
       const response = await fetch(
         "https://staging-auth-api.zoficash.com/api/v1/send-email",
@@ -61,7 +62,7 @@ const VerifyAccount = () => {
                 <Field
                   type="tel"
                   id="email"
-                  name="phone"
+                  name="email"
                   className={
                     errors.email && touched.email
                       ? "border-red-500 appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"

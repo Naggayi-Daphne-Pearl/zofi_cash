@@ -5,6 +5,7 @@ const Button = (props) => {
     <button
       className="bg-primary font-bold  font-body py-2 px-6 rounded md:ml-8  uppercase font-body text-xl my-4
     duration-500 text-white"
+      type="button"
     >
       {props.children}
     </button>
