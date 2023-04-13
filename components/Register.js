@@ -192,12 +192,12 @@ function Register() {
                         : "appearance-none border rounded w-1/4 py-2 px-1 text-gray-700 l focus:outline-none focus:shadow-outline"
                     }
                   >
-                    <option value="">+256</option>
+                    {/* <option value="">+256</option>
                     {country_codes.map((country) => (
                       <option key={country.code} value={country.code}>
                         {country.code}
                       </option>
-                    ))}
+                    ))} */}
                   </Field>
                   <ErrorMessage
                     name="country_code"
