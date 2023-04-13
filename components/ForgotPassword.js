@@ -39,7 +39,7 @@ const ForgotPassword = () => {
           {({ errors, touched }) => (
             <Form className="bg-white shadow-md rounded px-20 pt-6 pb-10 mb-4">
               <h1 className="flex justify-center text-3xl text-primary py-8">
-                Sign Up
+                Forgot Password?
               </h1>
               <div className="mb-6">
                 <label

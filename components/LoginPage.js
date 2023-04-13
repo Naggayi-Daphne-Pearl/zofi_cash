@@ -61,7 +61,7 @@ function LoginPage({}) {
                 name="email"
                 className={
                   errors.email && touched.email
-                     ? "border-red-500 appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    ? "border-red-500 appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     : "appearance-none border rounded w-full py-3 px-10 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 }
               />
@@ -94,12 +94,18 @@ function LoginPage({}) {
                 className="text-red-500 text-xs italic"
               />
             </div>
-            <div>
+            <div className="flex sm:block">
               <a
-                href="/signup"
-                className="flex justify-start text-primary underline"
+                href="/auth/signup"
+                className=" flex justify-start text-primary underline"
               >
                 Don't have an account
+              </a>
+              <a
+                href="/auth/forgotpassword"
+                className="flex  justify-start text-primary underline"
+              >
+                Forgot Password ?
               </a>
             </div>
             {error && <div>{error}</div>}
