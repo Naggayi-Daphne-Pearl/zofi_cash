@@ -46,7 +46,7 @@ function Register() {
         password,
         repeat_password,
         ip: "localhost:3000",
-        country_code:'+256',
+        country_code: "+256",
       };
       await registerApi(newUserData);
       router.push("/auth/security");
@@ -67,7 +67,7 @@ function Register() {
             <h1 className="flex justify-center text-3xl text-primary py-8">
               REGISTER FORM
             </h1>
-            <div className="grid grid-cols-2 gap-10">
+            <div className="grid grid-cols-1 gap-6 pt-10 sm:grid-cols-2 md:gap-10 md:pt-12 lg:grid-cols-3">
               <div className="mb-1">
                 <label
                   htmlFor="email"
@@ -171,7 +171,7 @@ function Register() {
                 />
               </div>
               {/* phone number */}
-
+              {/* 
               <div className="mb-1">
                 <label
                   htmlFor="code"
@@ -203,7 +203,7 @@ function Register() {
                   component="div"
                   className="text-red-500 text-xs italic"
                 />
-              </div>
+              </div> */}
               <div className="mb-1">
                 <label
                   htmlFor="phone_number"
@@ -225,6 +225,21 @@ function Register() {
                   name="phone_number"
                   component="div"
                   className="text-red-500 text-xs italic"
+                />
+              </div>
+
+              <div className="mb-1">
+                <label
+                  htmlFor="phone_number"
+                  className="block text-gray-700 font-bold mb-1 text-xl justify-center flex pb-2"
+                >
+                  IP
+                </label>
+                <Field
+                  type="tel"
+                  id="ip"
+                  name="ip"
+                  className="appearance-none border rounded w-full py-2 px-6 text-gray-700 focus:outline-none focus:shadow-outline"
                 />
               </div>
             </div>
