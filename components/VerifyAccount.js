@@ -1,9 +1,9 @@
-import React, { useState,use } from "react";
+import React, { useState, use } from "react";
 import Button from "./Button";
 import validationSchema from "./Schema";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useRouter } from "next/router";
-
+import { toast } from "react-toastify";
 
 const VerifyAccount = () => {
   const initialValues = { email: "" };
@@ -13,31 +13,14 @@ const VerifyAccount = () => {
   // tab
   const [activeTab, setActiveTab] = useState("phone");
 
-  const handleSubmit = async (values, { setSubmitting, setErrors }) => {
-    event.preventDefault();
+  const handleSubmit = async (values) => {
     try {
-      let apiUrl;
-      if (activeTab === "phone") {
-        apiUrl = "https://staging-auth-api.zoficash.com/api/v1/send-sms";
-      } else {
-        apiUrl = "https://staging-auth-api.zoficash.com/api/v1/send-email";
-      }
-      const response = await fetch(apiUrl, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      });
-      if (!response.ok) {
-        throw new Error(`Failed to send verification ${activeTab}.`);
-      }
-      setOtpSent(true);
-      router.push("/auth/register");
+      await verifyEmailOrPhone("phone", values); // or "email" depending on active tab
+      // handle success case
+      toast.success("Welcome to Zofi cash");
     } catch (error) {
-      setErrors({ [activeTab]: error.message });
-    } finally {
-      setSubmitting(false);
+      // handle error case
+      toast.error(error.message);
     }
   };
 

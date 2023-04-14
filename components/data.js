@@ -1,13 +1,13 @@
 export const roles = [
   {
     id: "1",
-    value: "employer",
+    role: "employer",
     id: "2",
-    value: "employee",
+    role: "employee",
     id: "3",
-    value: "staker",
+    role: "staker",
     id: "4",
-    value: "payroll",
+    role: "payroll",
   },
 ];
 

@@ -5,6 +5,7 @@ import {
   registerApi,
   resetPasswordApi,
   setSecurityAnswerApi,
+  verifyEmailOrPhoneApi,
 } from "../pages/api/auth";
 
 const AuthContext = createContext();
@@ -12,7 +13,14 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
-
+  // Verify using phone or email
+  const verifyEmailOrPhone = async (activeTab, values) => {
+    try {
+      await verifyEmailOrPhoneApi(activeTab, values);
+    } catch (error) {
+      throw new Error(`Failed to verify ${activeTab}: ${error.message}`);
+    }
+  };
   const login = async (email, password) => {
     try {
       const response = await loginApi(email, password);
@@ -79,6 +87,7 @@ export const AuthProvider = ({ children }) => {
         logout,
         resetPassword,
         setSecurityAnswer,
+        verifyEmailOrPhone,
       }}
     >
       {children}

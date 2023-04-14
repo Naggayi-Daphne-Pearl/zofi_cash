@@ -84,6 +84,29 @@ export const verifyPhoneApi = async (verificationCode) => {
   }
 };
 
+// send verification to either the phone or email address
+
+export async function verifyEmailOrPhoneApi(activeTab, values) {
+  let apiUrl;
+  if (activeTab === "phone") {
+    apiUrl = "https://staging-auth-api.zoficash.com/api/v1/send-sms";
+  } else {
+    apiUrl = "https://staging-auth-api.zoficash.com/api/v1/send-email";
+  }
+  const response = await fetch(apiUrl, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(values),
+  });
+  if (!response.ok) {
+    const error = new Error(`Failed to send verification ${activeTab}.`);
+    error.response = response;
+    throw error;
+  }
+}
+
 // Function to reset a user's password
 export const resetPasswordApi = async (
   email,

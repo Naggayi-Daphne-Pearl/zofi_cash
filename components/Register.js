@@ -3,7 +3,6 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import validationSchema from "./Schema";
 import Button from "./Button";
 import { countryCodes } from "./data";
-import { roles } from "./data";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -25,6 +24,19 @@ function Register() {
   const [error, setError] = useState(null);
 
   const [selectRole, setSelectRole] = useState("");
+
+  const roles = [
+    {
+      id: "1",
+      label: "employer",
+      id: "2",
+      label: "employee",
+      id: "3",
+      label: "staker",
+      id: "4",
+      label: "payroll",
+    },
+  ];
 
   function handleChangeRole(event) {
     setSelectRole(event.target.value);
@@ -100,7 +112,7 @@ function Register() {
                 </label>
                 <Field
                   as="select"
-                  id="role"
+                  id="label"
                   name="role"
                   value={selectRole}
                   onChange={handleChangeRole}
@@ -111,9 +123,9 @@ function Register() {
                   }
                 >
                   <option value="">Select Role</option>
-                  {roles.map((role) => (
-                    <option key={role.id} value={role.value}>
-                      {role.value}
+                  {roles.map((item) => (
+                    <option key={item.label} value={item.label}>
+                      {item.label}
                     </option>
                   ))}
                 </Field>
