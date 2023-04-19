@@ -6,7 +6,7 @@ import {
   resetPasswordApi,
   setSecurityAnswerApi,
   verifyEmailOrPhoneApi,
-} from "../pages/api/auth";
+} from "../pages/api/v1/auth";
 
 const AuthContext = createContext();
 
