@@ -1,12 +1,12 @@
-import React from "react";
-import WaitingPage from "@/components/WaitingPage";
+// import React from "react";
+// import WaitingPage from "@/components/WaitingPage";
 
-const waitinglist = () => {
-  return (
-    <div>
-      <WaitingPage />
-    </div>
-  );
-};
+// const waitinglist = () => {
+//   return (
+//     <div>
+//       <WaitingPage />
+//     </div>
+//   );
+// };
 
-export default waitinglist;
+// export default waitinglist;
