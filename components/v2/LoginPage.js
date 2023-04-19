@@ -10,7 +10,6 @@ import { useAuth } from "../../contexts/v2/AuthContext";
 // if  user logs in 5 times
 
 function LoginPage({ maxLoginAttempts, loginLockoutTime }) {
-  
   const initialValues = { email: "", password: "", phone_number: "" };
   const { login, error } = useAuth();
 
@@ -20,12 +19,12 @@ function LoginPage({ maxLoginAttempts, loginLockoutTime }) {
   const [activeTab, setActiveTab] = useState("phone");
   const router = useRouter();
 
-  // handling submit 
+  // handling submit
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      await login(email, password);
+      await login(email, password, phone_number);
       toast.success("Welcome to Zofi Cash");
       router.push("/dashboard");
     } catch (error) {

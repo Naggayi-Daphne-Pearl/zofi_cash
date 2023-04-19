@@ -6,10 +6,14 @@ export default async function loginUser(req, res) {
     fetch(apiUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email, password, phone_number }),
     });
   } catch (error) {
     console.log("error", error);
     return res.json({ status: 400, errors: error });
   }
 }
+
+
+
+
