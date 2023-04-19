@@ -4,7 +4,7 @@ import validationSchema from "../Schema";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import { setVerifyAccount } from "../../contexts/v2/AuthContext";
+import {useAuth } from "../../contexts/v2/AuthContext";
 
 const VerifyAccount = () => {
   const initialValues = { email: "", phone_number: "" };
