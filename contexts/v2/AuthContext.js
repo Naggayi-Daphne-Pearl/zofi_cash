@@ -8,24 +8,27 @@ import { createContext, useContext, useState } from "react";
 //   verifyEmailOrPhoneApi,
 // } from "../../pages/api/v1/auth";
 import { registerUser } from "../../pages/api/v2/post.register-account.api";
+import { loginUser } from "../../pages/api/v2/post.login-account.api";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
-  // Verify using phone or email
 
-  //   const login = async (email, password) => {
-  //     try {
-  //       const response = await loginApi(email, password);
-  //       setUser(response.data.user);
-  //       setError(null);
-  //     } catch (error) {
-  //       setError("Invalid email or password");
-  //       throw error;
-  //     }
-  //   };
+  //   Login user
+  const login = async (email, password) => {
+    try {
+      const response = await loginUser(email, password);
+      setUser(response.data.user);
+      setError(null);
+    } catch (error) {
+      setError("Invalid email or password");
+      throw error;
+    }
+  };
+
+  //   register user
   const register = async (userData) => {
     try {
       const response = await registerUser(userData);
@@ -76,7 +79,7 @@ export const AuthProvider = ({ children }) => {
       value={{
         user,
         error,
-        // login,
+        login,
         register,
         // forgotPassword,
         logout,
