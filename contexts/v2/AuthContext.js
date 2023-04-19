@@ -9,6 +9,7 @@ import { createContext, useContext, useState } from "react";
 // } from "../../pages/api/v1/auth";
 import { registerUser } from "../../pages/api/v2/post.register-account.api";
 import { loginUser } from "../../pages/api/v2/post.login-account.api";
+import { resetPasswordApi } from "../../pages/api/v2/get.reset-password.api";
 
 const AuthContext = createContext();
 
@@ -17,9 +18,9 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
   //   Login user
-  const login = async (email, password) => {
+  const login = async (email, password, phone_number) => {
     try {
-      const response = await loginUser(email, password);
+      const response = await loginUser(email, password, phone_number);
       setUser(response.data.user);
       setError(null);
     } catch (error) {
@@ -40,15 +41,25 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  //   const resetPassword = async (security_answer, password) => {
-  //     try {
-  //       await resetPasswordApi(security_answer, password);
-  //       setError(null);
-  //     } catch (error) {
-  //       setError("Failed to reset password");
-  //       throw error;
-  //     }
-  //   };
+  const resetPassword = async (
+    email,
+    security_question,
+    security_answer,
+    newPassword
+  ) => {
+    try {
+      await resetPasswordApi(
+        email,
+        security_question,
+        security_answer,
+        newPassword
+      );
+      setError(null);
+    } catch (error) {
+      setError("Failed to reset password");
+      throw error;
+    }
+  };
 
   //   const forgotPassword = async (email) => {
   //     try {
@@ -83,7 +94,7 @@ export const AuthProvider = ({ children }) => {
         register,
         // forgotPassword,
         logout,
-        // resetPassword,
+        resetPassword,
         // setSecurityAnswer,
         // verifyEmailOrPhone,
       }}
