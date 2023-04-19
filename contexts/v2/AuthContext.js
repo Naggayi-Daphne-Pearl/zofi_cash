@@ -10,6 +10,7 @@ import { createContext, useContext, useState } from "react";
 import { registerUser } from "../../pages/api/v2/post.register-account.api";
 import { loginUser } from "../../pages/api/v2/post.login-account.api";
 import { resetPasswordApi } from "../../pages/api/v2/get.reset-password.api";
+import { securityAnswerApi } from "../../pages/api/v2/post.security-question.api";
 
 const AuthContext = createContext();
 
@@ -82,6 +83,16 @@ export const AuthProvider = ({ children }) => {
   //     }
   //   };
 
+  // set security answer
+  const setSecurityAnswer = async (security_question, security_answer) => {
+    try {
+      await securityAnswerApi(security_question, security_answer);
+      setError(null);
+    } catch (error) {
+      setError("Failed to set security answer");
+      throw error;
+    }
+  };
   const logout = () => {
     setUser(null);
   };
@@ -96,7 +107,7 @@ export const AuthProvider = ({ children }) => {
         // forgotPassword,
         logout,
         resetPassword,
-        // setSecurityAnswer,
+        setSecurityAnswer,
         // verifyEmailOrPhone,
       }}
     >
