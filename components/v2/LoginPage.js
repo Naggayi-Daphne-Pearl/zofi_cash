@@ -10,6 +10,7 @@ import { useAuth } from "../../contexts/v2/AuthContext";
 // if  user logs in 5 times
 
 function LoginPage({ maxLoginAttempts, loginLockoutTime }) {
+  
   const initialValues = { email: "", password: "", phone_number: "" };
   const { login, error } = useAuth();
 
@@ -19,16 +20,7 @@ function LoginPage({ maxLoginAttempts, loginLockoutTime }) {
   const [activeTab, setActiveTab] = useState("phone");
   const router = useRouter();
 
-  // handle maximum login attempts
-  // useEffect(() => {
-  //   if (loginAttempts >= MAX_LOGIN_ATTEMPTS) {
-  //     setLoginLocked(true);
-  //     setTimeout(() => {
-  //       setLoginAttempts(0);
-  //       setLoginLocked(false);
-  //     }, 5 * 60 * 1000); // account locked in for 5  minutes
-  //   }
-  // }, [loginAttempts]);
+  // handling submit 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
