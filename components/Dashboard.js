@@ -43,6 +43,19 @@ const Dashboard = () => {
           )}
         </div>
       </nav>
+
+      <div className="flex justify-center items-center h-screen ">
+      <div className="display-block px-6">
+        <h1 className="text-primary lg:text-5xl font-bold ">DASHBOARD</h1>
+         <h1 className="text-primary text-2xl  py-12">
+            This is your dashboard
+          </h1>
+        
+        <footer className="mt-12 pt-12 mx-auto">
+          © Copyright 2023. All right reserved, Naggayi-Daphne-Pearl
+        </footer>
+      </div>
+    </div>
     </div>
   );
 };
