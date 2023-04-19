@@ -2,12 +2,11 @@ import React, { useState, useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import validationSchema from "./Schema";
 import Button from "./Button";
-import { countryCodes } from "./data";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { loginApi, registerApi } from "@/pages/api/v1/auth";
-import { AuthContext } from "@/contexts/v1/AuthContext";
+import { useAuth } from "@/contexts/v2/AuthContext";
 
 function Register() {
   const initialValues = {
@@ -22,7 +21,6 @@ function Register() {
 
   const router = useRouter();
   const [error, setError] = useState(null);
-
   const [selectRole, setSelectRole] = useState("");
 
   const roles = [
@@ -41,29 +39,52 @@ function Register() {
   function handleChangeRole(event) {
     setSelectRole(event.target.value);
   }
-
   const [selectedcountry_code, setSelectedcountry_code] = useState("");
-
   function handlecountry_codeChange(event) {
     setSelectedcountry_code(event.target.value);
   }
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const { register } = useAuth();
+
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
+  //   try {
+  //     const newUserData = {
+  //       phone_number,
+  //       email,
+  //       roles,
+  //       password,
+  //       repeat_password,
+  //       ip: "localhost:3000",
+  //       country_code: "+256",
+  //     };
+  //     await register(newUserData);
+  //     router.push("/auth/security");
+  //   } catch (error) {
+  //     setError(error.message);
+  //   }
+  // };
+
+  const handleSubmit = async (values, { setSubmitting }) => {
     try {
       const newUserData = {
-        phone_number,
-        email,
-        roles,
-        password,
-        repeat_password,
+        phone_number: values.phone_number,
+        email: values.email,
+        roles: values.roles,
+        password: values.password,
+        repeat_password: values.repeat_password,
         ip: "localhost:3000",
         country_code: "+256",
       };
-      await registerApi(newUserData);
+      await register(newUserData);
+      toast.success("Registration successful!");
       router.push("/auth/security");
     } catch (error) {
-      setError(error.message);
+      toast.error("Registration failed. Please try again.");
+      // setError(error.message);
+      console.log(error);
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -74,12 +95,12 @@ function Register() {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, isSubmitting }) => (
           <Form className="bg-white shadow-md rounded px-20 pt-6 pb-8 mb-4">
             <h1 className="flex justify-center text-3xl text-primary py-8">
               REGISTER FORM
             </h1>
-            <div className="grid grid-cols-1 gap-6 pt-10 sm:grid-cols-2 md:gap-10 md:pt-12 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-6 pt-10 sm:grid-cols-2 md:gap-10 md:pt-12 lg:grid-cols-2">
               <div className="mb-1">
                 <label
                   htmlFor="email"
@@ -257,7 +278,13 @@ function Register() {
             </div>
 
             <div className="flex items-center justify-center mt-6 ">
-              <Button type="submit">REGISTER</Button>
+              <Button
+                type="submit"
+                className="flex items-center justify-center mt-6"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Submitting..." : "Register"}
+              </Button>
             </div>
           </Form>
         )}
