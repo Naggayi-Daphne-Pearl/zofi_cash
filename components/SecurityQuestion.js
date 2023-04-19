@@ -5,7 +5,7 @@ import Button from "./Button";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/v1/AuthContext";
 
 const SecurityQuestion = () => {
   const initialValues = { security_answer: "", security_question: "" };

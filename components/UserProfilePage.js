@@ -4,7 +4,7 @@ import { useState } from "react";
 import validationSchema from "./Schema";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import Button from "./Button";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/v1/AuthContext";
 import { useRouter } from "next/router";
 
 

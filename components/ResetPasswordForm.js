@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "./Button";
 import validationSchema from "./Schema";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../contexts/v1/AuthContext";
 
 const ForgotPassword = () => {
   const initialValues = {

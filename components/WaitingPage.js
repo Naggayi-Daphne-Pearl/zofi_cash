@@ -1,7 +1,7 @@
 // Putting the user account on the waitlist after registration:
 import React from "react";
 import { useRouter } from "next/router";
-import { useUserContext } from "../contexts/AuthContext";
+import { useUserContext } from "../contexts/v1/AuthContext";
 
 const WaitingPage = () => {
   const { user } = useUserContext();
