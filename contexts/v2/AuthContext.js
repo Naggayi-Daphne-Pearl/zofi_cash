@@ -11,6 +11,7 @@ import { registerUser } from "../../pages/api/v2/post.register-account.api";
 import { loginUser } from "../../pages/api/v2/post.login-account.api";
 import { resetPasswordApi } from "../../pages/api/v2/get.reset-password.api";
 import { securityAnswerApi } from "../../pages/api/v2/post.security-question.api";
+import { verifyAccountApi } from "../../pages/api/v2/get.verify-account.api";
 
 const AuthContext = createContext();
 
@@ -93,6 +94,17 @@ export const AuthProvider = ({ children }) => {
       throw error;
     }
   };
+
+  // verify account
+  const setVerifyAccount = async (email, phone_number, verificationCode) => {
+    try {
+      await verifyAccountApi(email, phone_number, verificationCode);
+      setError(null);
+    } catch (error) {
+      setError("Failed to verify account");
+      throw error;
+    }
+  };
   const logout = () => {
     setUser(null);
   };
@@ -108,7 +120,7 @@ export const AuthProvider = ({ children }) => {
         logout,
         resetPassword,
         setSecurityAnswer,
-        // verifyEmailOrPhone,
+        setVerifyAccount,
       }}
     >
       {children}
