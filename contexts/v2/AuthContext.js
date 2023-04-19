@@ -41,6 +41,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // resetting password
   const resetPassword = async (
     email,
     security_question,
