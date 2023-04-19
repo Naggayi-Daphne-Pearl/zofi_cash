@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../../contexts/v2/AuthContext";
+import Link from "next/link";
 
 // if  user logs in 5 times
 
@@ -137,12 +138,12 @@ function LoginPage({ maxLoginAttempts, loginLockoutTime }) {
                 />
               </div>
               <div className="block">
-                <a
+                <Link
                   href="/auth/forgotpassword"
                   className="text-primary underline px-4"
                 >
                   Forgot Password ?
-                </a>
+                </Link>
               </div>
               <Button
                 type="submit"

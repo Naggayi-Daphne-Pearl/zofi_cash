@@ -4,7 +4,8 @@ import validationSchema from "../Schema";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
-import {useAuth } from "../../contexts/v2/AuthContext";
+import { useAuth } from "../../contexts/v2/AuthContext";
+import Link from "next/link";
 
 const VerifyAccount = () => {
   const initialValues = { email: "", phone_number: "" };
@@ -126,9 +127,12 @@ const VerifyAccount = () => {
                 </div>
               )}
               <div>
-                <a href="/auth/login" className="text-primary underline px-4">
+                <Link
+                  href="/auth/login"
+                  className="text-primary underline px-4"
+                >
                   Already have an account?
-                </a>
+                </Link>
               </div>
             </Form>
           )}
