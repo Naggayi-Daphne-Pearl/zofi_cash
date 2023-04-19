@@ -5,17 +5,17 @@ import Button from "./Button";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useAuth } from "../contexts/v2/AuthContext";
+import { useAuth } from "../contexts/AuthContext";
 
 // if  user logs in 5 times
-
-function LoginPage({ maxLoginAttempts, loginLockoutTime }) {
+const MAX_LOGIN_ATTEMPTS = 5;
+function LoginPage({}) {
   const initialValues = { email: "", password: "", phone_number: "" };
   const { login, error } = useAuth();
 
   const [loginAttempts, setLoginAttempts] = useState(0);
-
-  // a user can login using an email or phone number
+  const [loginLocked, setLoginLocked] = useState(false);
+  // tab
   const [activeTab, setActiveTab] = useState("phone");
   const router = useRouter();
 
@@ -34,24 +34,8 @@ function LoginPage({ maxLoginAttempts, loginLockoutTime }) {
 
     try {
       await login(email, password);
-      toast.success("Welcome to Zofi Cash");
-      router.push("/dashboard");
     } catch (error) {
-      toast.error("Wrong crendentials");
       setError(error.message);
-    }
-    // handling maximum login attempts
-    if (loginAttempts >= maxLoginAttempts) {
-      setTimeout(() => {
-        setLoginAttempts(0);
-      }, loginLockoutTime * 1000);
-
-      return (
-        <div>
-          <p>You have been locked out Please try again later</p>
-          <p>Login in again in the next: {loginLockoutTime} seconds</p>
-        </div>
-      );
     }
   };
 
