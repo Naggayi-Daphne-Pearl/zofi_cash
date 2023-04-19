@@ -5,7 +5,7 @@ import Button from "./Button";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useAuth } from "../contexts/v1/AuthContext";
+import { useAuth } from "../contexts/v2/AuthContext";
 
 // if  user logs in 5 times
 const MAX_LOGIN_ATTEMPTS = 5;
