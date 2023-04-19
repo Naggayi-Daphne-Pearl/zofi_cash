@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import Button from "./Button";
-import validationSchema from "./Schema";
+import Button from "../Button";
+import validationSchema from "../Schema";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import OtpVerfication from "./OtpVerficiationForm";
-import { useAuth } from "../contexts/v1/AuthContext";
+import OtpVerfication from "../OtpVerficiationForm";
+import { useAuth } from "../../contexts/v1/AuthContext";
 import { useRouter } from "next/router";
 
 const ForgotPassword = () => {
@@ -20,20 +20,19 @@ const ForgotPassword = () => {
   function handleChangeQuestion(event) {
     setSelectQuestion(event.target.value);
   }
-  const { setSecurityAnswer } = useAuth();
 
-  const { forgotPassword, error } = useAuth();
-  const [email, setEmail] = useState("");
+  // const { forgotPassword, error } = useAuth();
+  // const [email, setEmail] = useState("");
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
 
-    try {
-      await forgotPassword(email);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  //   try {
+  //     await forgotPassword(email);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
   return (
     <div>
       <div className="flex flex-col items-center min-h-screen pt-6 sm:justify-center sm:pt-0 ">
@@ -42,12 +41,12 @@ const ForgotPassword = () => {
         </h1>
         <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-white shadow-md sm:max-w-lg sm:rounded-lg">
           <h1 className="flex justify-center text-3xl text-primary py-10 font-semi">
-            Reset Password
+            Forgot  Password
           </h1>
           <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={handleSubmit}
+            // onSubmit={handleSubmit}
           >
             {({ isSubmitting, errors, touched }) => (
               <Form>
