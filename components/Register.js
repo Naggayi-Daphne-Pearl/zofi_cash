@@ -6,7 +6,7 @@ import { countryCodes } from "./data";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { loginApi, registerApi } from "@/pages/api/auth";
+import { loginApi, registerApi } from "@/pages/api/v1/auth";
 import { AuthContext } from "@/contexts/AuthContext";
 
 function Register() {
