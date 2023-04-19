@@ -49,7 +49,7 @@ function LoginPage({ maxLoginAttempts, loginLockoutTime }) {
 
   return (
     <div>
-      <div className="max-w-lg mx-auto h-screen my-20 items-center">
+      <div className="max-w-lg mx-auto h-screen my-15 items-center">
         <h1 className="flex justify-center sm:text-3xl text-5xl text-primary py-10 text-header font-bold">
           Zofi Cash
         </h1>
