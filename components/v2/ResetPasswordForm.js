@@ -15,10 +15,6 @@ const ForgotPassword = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    // if (password !== confirmPassword) {
-    //   setError("Passwords do not match");
-    //   return;
-    // }
     try {
       setError("");
       await resetPassword(

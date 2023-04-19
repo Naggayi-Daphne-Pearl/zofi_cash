@@ -1,11 +1,11 @@
 import { useState, useEffect, useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import validationSchema from "./Schema";
-import Button from "./Button";
+import validationSchema from "../Schema";
+import Button from "../Button";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useAuth } from "../contexts/v1/AuthContext";
+import { useAuth } from "../../contexts/v1/AuthContext";
 
 const SecurityQuestion = () => {
   const initialValues = { security_answer: "", security_question: "" };
@@ -24,19 +24,19 @@ const SecurityQuestion = () => {
   }
   const { setSecurityAnswer } = useAuth();
 
-  const handleSubmit = async (event, value) => {
-    event.preventDefault();
-    const security_question = security_question.value;
-    const security_answer = security_answer.value;
+  const handleSubmit = async (values, { setSubmitting }) => {
+    const security_answer = values.security_answer;
+    const security_question = values.security_question;
     try {
       await setSecurityAnswer(security_question, security_answer);
-      // handle success case
       router.push("/auth/login");
       toast.success("Security Question Set Successfully");
     } catch (error) {
-      // handle error case
       toast.error("Security Question Set Failed");
-      setError(error.message);
+      // setError(error.message);
+      console.log(error);
+    } finally {
+      setSubmitting(false);
     }
   };
   return (
@@ -111,7 +111,13 @@ const SecurityQuestion = () => {
                   </div>
                 </div>
                 <div className=" pt-8 flex justify-center">
-                  <Button>Confirm</Button>
+                  <Button
+                    type="submit"
+                    className="flex items-center justify-center mt-6"
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? "Submitting..." : "Log In"}
+                  </Button>
                 </div>
               </Form>
             )}
