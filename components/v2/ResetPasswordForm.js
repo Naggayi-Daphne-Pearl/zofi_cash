@@ -6,22 +6,21 @@ import { useAuth } from "../../contexts/v2/AuthContext";
 
 const ForgotPassword = () => {
   const initialValues = {
+    email:"", 
     password: "",
-    confirmPassword: "",
-    security_answer: "",
+    
   };
 
   const { resetPassword, error } = useAuth();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
     try {
       setError("");
       await resetPassword(
         email,
-        security_question,
-        security_answer,
-        newPassword
+        password
       );
       router.push("/auth/login");
     } catch (error) {
