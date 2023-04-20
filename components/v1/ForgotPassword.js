@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "../Button";
 import validationSchema from "../Schema";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import OtpVerfication from "../OtpVerficiationForm";
+import OtpVerfication from "./OtpVerficiationForm";
 import { useAuth } from "../../contexts/v1/AuthContext";
 import { useRouter } from "next/router";
 

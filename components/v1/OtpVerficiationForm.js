@@ -1,12 +1,12 @@
 import Link from "next/link";
 import { useState, useEffect, useContext } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import validationSchema from "./Schema";
-import Button from "./Button";
+import validationSchema from "../Schema";
+import Button from "../Button";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useAuth } from "../contexts/v2/AuthContext";
+import { useAuth } from "../../contexts/v2/AuthContext";
 
 const OtpVerificationForm = ({ phoneNumber }) => {
   const [otpCode, setOtpCode] = useState("");
