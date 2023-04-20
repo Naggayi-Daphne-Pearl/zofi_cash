@@ -1,5 +1,5 @@
 export default async function verifyToken(verificationCode) {
-  const apiUrl = process.env.VERIFY_ACCOUNT_URL;
+  const apiUrl = process.env.VERIFY_ACCOUNT_GET;
   const response = await fetch(apiUrl, {
     method: "GET",
     headers: { "Content-Type": "application/json" },

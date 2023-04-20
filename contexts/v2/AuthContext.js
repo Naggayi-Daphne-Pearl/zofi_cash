@@ -81,7 +81,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   // Get verification token
-  const setVerifyToken = async (email, phone_number) => {
+  const setVerifyToken = async (verificationCode) => {
     try {
       await verifyToken(verificationCode);
       setError(null);
