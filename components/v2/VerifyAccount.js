@@ -22,7 +22,7 @@ const VerifyAccount = () => {
     try {
       // phone or "email" depending on active tab
       await setVerifyAccount(email, phone_number);
-      router.push("/auth/login");
+      router.push("/auth/otp");
       toast.success("Successfully validated account");
     } catch (error) {
       toast.error(error.message);
