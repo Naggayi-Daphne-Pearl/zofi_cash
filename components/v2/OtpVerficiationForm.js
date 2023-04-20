@@ -14,14 +14,19 @@ const OtpVerificationForm = ({ phoneNumber }) => {
   };
 
   const { setVerifyToken } = useAuth();
+  const router = useRouter();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (values, { setSubmitting }) => {
+    const code = values.verificationCode;
 
     try {
-      await setVerifyToken(verificationCode);
+      // phone or "email" depending on active tab
+      await setVerifyToken(code);
+      router.push("/auth/register");
     } catch (error) {
-      console.error(error);
+      toast.error(error.message);
+    } finally {
+      setSubmitting(false);
     }
   };
 
