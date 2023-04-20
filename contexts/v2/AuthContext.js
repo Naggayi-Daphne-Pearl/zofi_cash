@@ -1,12 +1,5 @@
 import { createContext, useContext, useState } from "react";
-// import {
-//   forgotPasswordApi,
-//   loginApi,
-//   registerApi,
-//   resetPasswordApi,
-//   setSecurityAnswerApi,
-//   verifyEmailOrPhoneApi,
-// } from "../../pages/api/v1/auth";
+import { verifyEmailOrPhoneApi } from "../../pages/api/v2/post.verify-email-or-phone.api";
 import { registerUser } from "../../pages/api/v2/post.register-account.api";
 import { loginUser } from "../../pages/api/v2/post.login-account.api";
 import { resetPasswordApi } from "../../pages/api/v2/post.reset-password.api";
@@ -55,7 +48,7 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const forgotPassword = async (security_answer, security_question ) => {
+  const forgotPassword = async (security_answer, security_question) => {
     try {
       await forgotPasswordApi(security_answer, security_question);
       setError(null);
@@ -90,6 +83,15 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
   };
 
+  // verify using phone or email
+  const verifyEmailOrPhone = async (activeTab, values) => {
+    try {
+      await verifyEmailOrPhoneApi(activeTab, values);
+    } catch (error) {
+      throw new Error(`Failed to verify ${activeTab}: ${error.message}`);
+    }
+  };
+
   return (
     <AuthContext.Provider
       value={{
@@ -102,6 +104,7 @@ export const AuthProvider = ({ children }) => {
         resetPassword,
         setSecurityAnswer,
         setVerifyAccount,
+        verifyEmailOrPhone,
       }}
     >
       {children}
