@@ -9,29 +9,19 @@ import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../../contexts/v2/AuthContext";
 
 const OtpVerificationForm = ({ phoneNumber }) => {
-  const [otpCode, setOtpCode] = useState("");
-  const [otpVerified, setOtpVerified] = useState(false);
   const initialValues = {
     code: "",
   };
 
-  const handleOtpVerification = async (e) => {
-    e.preventDefault();
-    // Call an API to verify the OTP code entered by the user
-    const response = await fetch(
-      "https://staging-auth-api.zoficash.com/api/v1/send-otp-to-account",
-      {
-        method: "POST",
-        body: JSON.stringify({ code }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    if (response.ok) {
-      setOtpVerified(true);
-    } else {
-      // Handle error
+  const { setVerifyToken } = useAuth();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      await setVerifyToken(verificationCode);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -49,7 +39,7 @@ const OtpVerificationForm = ({ phoneNumber }) => {
         <Formik
           initialValues={initialValues}
           validationSchema={validationSchema}
-          onSubmit={handleOtpVerification}
+          onSubmit={handleSubmit}
         >
           {({ errors, touched }) => (
             <Form className="bg-white shadow-md rounded px-20 pt-6 pb-10 mb-4">

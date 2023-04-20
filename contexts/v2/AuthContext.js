@@ -3,7 +3,8 @@ import { registerUser } from "../../pages/api/v2/post.register-account.api";
 import { loginUser } from "../../pages/api/v2/post.login-account.api";
 import { resetPasswordApi } from "../../pages/api/v2/post.reset-password.api";
 import { securityAnswerApi } from "../../pages/api/v2/post.security-question.api";
-import { verifyAccountApi } from "../../pages/api/v2/get.verify-account.api";
+import { verifyToken } from "../../pages/api/v2/get.verify-account.api";
+import { otpVerificationApi } from "../../pages/api/v2/post.verify-account.api";
 import { forgotPasswordApi } from "../../pages/api/v2/get.forgot-password.api";
 
 const AuthContext = createContext();
@@ -68,16 +69,28 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // verify account
-  const setVerifyAccount = async (email, phone_number, verificationCode) => {
+  // Get verification token
+  const setVerifyAccount = async (email, phone_number) => {
     try {
-      await verifyAccountApi(email, phone_number, verificationCode);
+      await otpVerificationApi(email, phone_number);
       setError(null);
     } catch (error) {
       setError("Failed to verify account");
       throw error;
     }
   };
+
+  // Get verification token
+  const setVerifyToken = async (email, phone_number) => {
+    try {
+      await verifyToken(verificationCode);
+      setError(null);
+    } catch (error) {
+      setError("Failed to verify account");
+      throw error;
+    }
+  };
+
   const logout = () => {
     setUser(null);
   };
@@ -94,6 +107,7 @@ export const AuthProvider = ({ children }) => {
         resetPassword,
         setSecurityAnswer,
         setVerifyAccount,
+        setVerifyToken,
       }}
     >
       {children}
