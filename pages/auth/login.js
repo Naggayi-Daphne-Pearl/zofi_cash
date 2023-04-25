@@ -1,10 +1,12 @@
+import Link from "next/link";
 import LoginPage from "../../components/v2/LoginPage";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-function Login() {
+import cookieParser from "cookie-parser";
+function Login({ isLoggedIn }) {
+  if (isLoggedIn) {
+    return <Link href="/dashboard" />;
+  }
   return (
     <div>
-      <ToastContainer />
       <LoginPage />
     </div>
   );
@@ -13,11 +15,23 @@ function Login() {
 export default Login;
 
 export async function getServerSideProps(context) {
+  const isLoggedIn = checkIfUserIsLoggedIn(context.req);
+
   return {
     props: {
-      apiEndPoint: process.env.LOGIN_URL,
-      maxLoginAttempts: parseInt(process.env.MAX_LOGIN_ATTEMPTS),
-      loginLockoutTime: parseInt(process.env.LOGIN_LOCKOUT_TIME),
+      isLoggedIn,
     },
   };
+}
+
+function checkIfUserIsLoggedIn(req) {
+  // Use cookie-parser middleware to parse cookies
+  cookieParser()(req, null, () => {});
+
+  // Check if user is logged in using cookies
+  if (req.cookies.isLoggedIn === "true") {
+    return true;
+  } else {
+    return false;
+  }
 }
