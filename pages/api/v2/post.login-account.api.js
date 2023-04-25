@@ -1,5 +1,6 @@
+const LOGIN_URL = "https://staging-auth-api.zoficash.com/api/v1/account-login";
 export default async function loginUser(req, res) {
-  const apiUrl = process.env.LOGIN_URL;
+  const apiUrl = LOGIN_URL;
   if (req.method !== "POST")
     return res.json({ status: 400, errors: `${req.method} not allowed.` });
   try {

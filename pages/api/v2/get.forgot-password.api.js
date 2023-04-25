@@ -1,5 +1,5 @@
 const FORGOT_PASSWORD_URL =
-  "https://staging-auth-api.zoficash.com/api/v1/reset-account-password/:reset_password_id";
+  `https://${process.env.ENVIRONMENT}-auth-api.zoficash.com/api/v1/reset-account-password/:reset_password_id`;
 
 export default async function forgotPasswordApi(req, res) {
   const apiUrl = FORGOT_PASSWORD_URL;

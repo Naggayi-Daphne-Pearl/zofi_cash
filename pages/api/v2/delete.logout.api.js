@@ -1,4 +1,4 @@
-const LOGOUT_ACCOUNT = "https://staging-auth-api.zoficash.com/api/v1/logout";
+const LOGOUT_ACCOUNT = `https://${process.env.ENVIRONMENT}-auth-api.zoficash.com/api/v1/logout`;
 export default async function logoutUser(req, res) {
   const apiUrl = LOGOUT_ACCOUNT;
   if (req.method !== "DELETE")
