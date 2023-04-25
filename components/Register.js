@@ -5,9 +5,8 @@ import Button from "./Button";
 import { useRouter } from "next/router";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { loginApi, registerApi } from "@/pages/api/v1/auth";
 import { useAuth } from "@/contexts/v2/AuthContext";
-
+import { countryCodes } from "./data";
 function Register() {
   const initialValues = {
     email: "",
@@ -16,7 +15,6 @@ function Register() {
     phone_number: "",
     country_code: "",
     roles: "",
-    ip: "localhost:3000",
   };
 
   const router = useRouter();
@@ -44,26 +42,7 @@ function Register() {
     setSelectedcountry_code(event.target.value);
   }
 
-  const { register } = useAuth();
-
-  // const handleSubmit = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     const newUserData = {
-  //       phone_number,
-  //       email,
-  //       roles,
-  //       password,
-  //       repeat_password,
-  //       ip: "localhost:3000",
-  //       country_code: "+256",
-  //     };
-  //     await register(newUserData);
-  //     router.push("/auth/security");
-  //   } catch (error) {
-  //     setError(error.message);
-  //   }
-  // };
+  const { register, fetchIpAddress } = useAuth();
 
   const handleSubmit = async (values, { setSubmitting }) => {
     try {
@@ -73,9 +52,10 @@ function Register() {
         roles: values.roles,
         password: values.password,
         repeat_password: values.repeat_password,
-        ip: "localhost:3000",
-        country_code: "+256",
+        fetchIpAddress,
+        country_code: values.country_code,
       };
+
       await register(newUserData);
       toast.success("Registration successful!");
       router.push("/auth/security");
@@ -204,13 +184,13 @@ function Register() {
                 />
               </div>
               {/* phone number */}
-              {/* 
+
               <div className="mb-1">
                 <label
                   htmlFor="code"
                   className="block text-gray-700 font-bold mb-1 text-xl justify-center flex pb-2"
                 >
-                  code
+                 Country Code 
                 </label>
                 <Field
                   as="select"
@@ -218,11 +198,7 @@ function Register() {
                   name="country_code"
                   value={selectedcountry_code}
                   onChange={handlecountry_codeChange}
-                  className={
-                    errors.country_code && touched.country_code
-                      ? "border-red-500 appearance-none border rounded w-1/4 py-2 px-1 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                      : "appearance-none border rounded w-1/4 py-2 px-1 text-gray-700 l focus:outline-none focus:shadow-outline"
-                  }
+                  className="block text-gray-700 font-bold mb-1 text-xl justify-center flex pb-2"
                 >
                   <option value="">+256</option>
                   {countryCodes.map((country) => (
@@ -231,12 +207,7 @@ function Register() {
                     </option>
                   ))}
                 </Field>
-                <ErrorMessage
-                  name="country_code"
-                  component="div"
-                  className="text-red-500 text-xs italic"
-                />
-              </div> */}
+              </div>
               <div className="mb-1">
                 <label
                   htmlFor="phone_number"
@@ -261,7 +232,7 @@ function Register() {
                 />
               </div>
 
-              <div className="mb-1">
+              {/* <div className="mb-1">
                 <label
                   htmlFor="phone_number"
                   className="block text-gray-700 font-bold mb-1 text-xl justify-center flex pb-2"
@@ -274,7 +245,7 @@ function Register() {
                   name="ip"
                   className="appearance-none border rounded w-full py-2 px-6 text-gray-700 focus:outline-none focus:shadow-outline"
                 />
-              </div>
+              </div> */}
             </div>
 
             <div className="flex items-center justify-center mt-6 ">
