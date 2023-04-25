@@ -1,9 +1,10 @@
+const RESET_PASSWORD_URL =
+  "https://staging-auth-api.zoficash.com/api/v1/user-reset-account-password/";
 export default async function resetPasswordApi(req, res) {
-  const apiUrl = process.env.RESET_PASSWORD_URL;
   if (req.method !== "POST")
     return res.json({ status: 400, errors: `${req.method} not allowed.` });
   try {
-    fetch(apiUrl, {
+    fetch(RESET_PASSWORD_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

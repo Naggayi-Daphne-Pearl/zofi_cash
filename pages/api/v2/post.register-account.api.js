@@ -1,6 +1,7 @@
+const REGISTER_URL =
+  "https://staging-auth-api.zoficash.com/api/v1/account-registration";
 export async function registerUser(newUserData) {
-  const apiUrl = process.env.REGISTER_URL;
-  const response = await fetch(apiUrl, {
+  const response = await fetch(REGISTER_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(newUserData),

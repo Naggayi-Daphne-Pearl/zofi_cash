@@ -1,5 +1,8 @@
+const VERIFY_ACCOUNT_GET =
+  "https://staging-auth-api.zoficash.com/api/v1/verify-account";
+
 export default async function verifyToken(verificationCode) {
-  const apiUrl = process.env.VERIFY_ACCOUNT_GET;
+  const apiUrl = VERIFY_ACCOUNT_GET;
   const response = await fetch(apiUrl, {
     method: "GET",
     headers: { "Content-Type": "application/json" },
